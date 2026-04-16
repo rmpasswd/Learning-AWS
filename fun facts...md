@@ -19,6 +19,12 @@ CloudFormation:
 1. The AMI image id (used  in template files) is unique for each  region. The ImageId in us-east-1 will not work if used inside a cloudFormation stack in  us-west-1 region.
 2. 
 
+CloudWatch
+1. CloudWatch only monitors the health of the resources that you own based on certain metrics but it does not check the underlying hardware that hosts the AWS resources. Use AWS Health Events  instead.
+2.  
+
+
+
 
 Cost  Allocation Tag
 -   Can  take upto 24  hours  to appear  in Billing and Cost Management console for activation. E.g. tagging prod. resources and dev to isolate billing stats.
@@ -27,8 +33,12 @@ Cost  Allocation Tag
 - Use other IdP Federation tools, such  as SAML 2.0 for 5000+ users. or if there are already  an existing on-premise identity  management platform in place.
 - 
 
+- Two services,  AWS Direct Connect and dynamic VPNs,  use  Border  Gateway Protocol which is a routing protocol  used to control how data flows from point A to B, C  and finally the destination D.
 
 
+EC2
+1. An  instance can have EBS-backed or the default existing native Instance-store-backed. For the latter, all data will  be  lost when the EC2 instance  is stopped.   But EBS volumes can persist,  or exporting necessary  files to S3 bucket is another option.
+2. 
 
 
 
