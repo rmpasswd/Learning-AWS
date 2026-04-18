@@ -51,18 +51,44 @@
 ### CloudWatch
 
 1. It does not pull, the services push their logs into it. (It just 'watches').
-2. Log = timestamped data
-3. "log stream is a sequence of log events that share the same source." [docs](https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/Working-with-log-groups-and-streams.html)
-4. Log Events(new entry in /var/log of an EC2 linux instance) --> Log Stream for each instances --> Log Groups --> Metric Filter --> Metric  --> Alarm.
+2. Log = timestamped data; what happened at a certain time. Metrics= a number  measured  over period of time eg. CPU usage: average cpu metric.
+   -  Traces: History of request that travels to  multiple apps/services, so that we can pinpoint failure/performance degradation
+   -  
+4. "log stream is a sequence of log events that share the same source." [docs](https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/Working-with-log-groups-and-streams.html)
+5. Log Events(e.g.  a new entry in /var/log of an EC2 linux instance) --> Log Stream for each instances --> Log Groups --> Metric Filter --> Metric  --> Alarm.
+<img width="1259" height="596" alt="image" src="https://github.com/user-attachments/assets/4e8e6d99-4e24-4796-9291-5fd0597cd1db" />
+6. Logs Insights contain more filtering option that the lower level filter feature in log stream.
+7. Install cloudwatch Agent via SSM  on a EC2 that has the 'CloudWatchAgentServerRole' permission.
+8. 
+
+### VPC Flow Logs
+1. Any  data (in  the  network interface (ENI) level) that has got to do with flow of data into or out of VPC. not internal contents!
+2. _Not Realtime_
+3. Can be  accessed  from CloudWatch Logs or S3
+4. Athena for querying
 
 ### CloudTrail
 1. Regional service. _Not realtime_.
 2. Trail implies investigation... auditing.
 3. CloudTrails records(logs) each and every activity(by user,role,service) in AWS.
 4. 90 days history free. 1 Trail/region is free. Only for Mgmnt events.
-5. Mgmnt(aka control-plane operation) events, data events, insight events, Network activity events(within a vpc)
+5. Example of events: Mgmnt(aka control-plane operation) events, data events, insight events, Network activity events(within a vpc)
 6. Creating a "Trail" in a region enables us to pass the logs to CloudWatch, configure and save it in S3 bucket as compressed JSON.  Global services event logged in us-east1(n. virginia) but only after making a 'trail'
 7. 
+
+### AWS  Athena
+
+1. Serverless querying service
+2. Pay only for amount of data consumed, not hourly.  Data can be structured or unstructured.
+3. We can apply  a schema on the data(xml,json,csv,avro,parquet,apache,cloudtrail,vpc flowlogs, aws glue data catalog, web server logs).
+4. The data(sitting on  S3) remains unchanged! Gets structured by the schema mid-flight before query is applied..
+5. Optimize the original data-set(s3)  to optmize cost.
+
+
+### AWS Config
+1.  Tracks changes to configuration of services,  resources and tracks  any compliance-breach(compliant/non-compliant)
+2.  Cannot  prevent changges, only monitors them
+3.  
 
 ###  KMS
 1. Stores and lets users, applications, other aws service use Keys.
