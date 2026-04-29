@@ -5,7 +5,22 @@ S3
    - if the ID is not mentioned, a 'delete  marker'  is places, hiding all older versions. If the 'delete marker'  is removed,  the object is 'un-deleted.
    - 
 2. Single Upload vs Multi-part upload(requires file to be at least 100MB,  the last  fragment can be 5MB no prob)
-
+3. If you try to add the following **bucket policy** you will encounter this error and nothing else: `Action does not apply to any resource(s) in statement`. Double resource name spelling but the real issue is that the permission 'ListBucket' cannot be used when targetting **objects** in the resource section. Fix is to not use listbucket! or do not use the `/*` and only use the bucket name, depending on your goal.
+   - Bucket Policy:
+     ```
+           {
+      	"Version": "2012-10-17",
+      	"Statement": [
+      		{
+      			"Sid": "AllowReadonly",
+      			"Principal": "*",
+      			"Effect": "Allow",
+      			"Action": ["s3:GetObject", "s3:ListBucket"],
+      			"Resource": ["arn:aws:s3:::blog-fastapi-2026/profile_pics/*"]
+      		}
+      	]
+      }
+     ```
 
 
 IAM
